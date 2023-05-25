@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Category | {% endblock %}
+
+{% block content %}
+    <strong class="is-size-5 is-italic has-text-centered">Categories</strong>
+    <hr>
+    <div class="columns">
+        <div class="sidebar">
+            <div class="content is-medium">
+                <ul>
+                    {%for category in categories%}
+                       <li><div class="box has-rounded-corners is-inline-block has-background-dark">
+                       <a href="{% url 'category_detail' category.slug %}"><p class= "has-text-light">{{ category.title }}</p></a></div></li>
+                    {% endfor %}
+                </ul>
+            </div>
+                
+        </div>
+    </div>    
+{% endblock %}
