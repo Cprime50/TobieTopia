@@ -1,65 +1,125 @@
 {% extends 'core/base.html' %}
 
-{% block title %}{{ post.title}} | {% endblock %}
+{% block title %} {{ post.title}} {% endblock %}
+{% block meta %}
+<meta name="description" content="{{ post.meta_description }}">
+<meta name="author" content="Tobietopia">
+<meta property="og:title" content="{{ post.title }} | Tobietopia">
+<meta property="og:description" content="{{ post.meta_description }}">
+<meta property="og:image" content="{{ post.image_url }}">
+<meta property="og:url" content="/{% url 'post_detail' post.category.slug post.slug %}">
+<meta property="og:type" content="article">
+{% endblock %}
 
 {% block content %}
+<link rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnload();</script>
+
 <section class="hero">
-    <div class="hero-body">
-        <div class="container">
-            <section class="section">
-                
+        <section class="section">
                 <!--our post details-->
-                <div class="columns">
-                    <div class="column is-8 is-offset-2">
-                        <div class="content is-size-6">
-                            {% if post.image %}
-                                <div class="box has-rounded-corners is-inline-block">
-                                    <figure class="image mb-5">
-                                    <img src="{{ post.image.url }}">
-                                    </figure>
-                                </div>
-                            {% endif %}
-                            <div class="box has-rounded-corners is-inline-block has-background-dark">
-                            <h2 class="subtitle is-family-primary is-4 has-text-white">{{ post.created_at |timesince }} ago</h2>
-                            <h1 class="title is-family-primary has-text-white">{{ post.title }}</h1></div>
-                            <p><strong>{{ post.intro }}</strong></p>
-                            <p>{{ post.body}}</p>
-                            <p><small>Category: <a href="{% url 'category_detail' post.category.slug %}">{{ post.category }}</a></small></p>        <!--post category-->
+                {% if post.image %}
+                    <div class="box has-rounded-corners is-inline-block">
+                        <figure class="image mb-2">
+                        <img src="{{ post.image.url }}">
+                        </figure>
+                    </div>
+                {% endif %}
+                <hr>
 
-                            <hr>
+                <div class="box is-centered has-rounded-corners is-inline-block has-background-dark">
+                <h2 class="subtitle is-family-primary is-4 has-text-white">{{ post.created_at |timesince }} ago</h2>
+                <h1 class="title is-family-primary has-text-white">{{ post.title }}</h1></div>
+                <p class="is-size-5 is-family-primary">
+                    {{ post.intro }}</p>
+                <hr>
+                <p>
+                    {{ post.media }}
+                    {{ post.body| safe }}</p>
+                <hr>
+                
 
-                            <p class="tags">Tag: {{ post.tags.all|join:", "}}</p>       <!--tags for our post-->
+                <div class="social-sharing">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">
+                    <button class="button is-inline is-secondary"><small class="is-size-7 has-text-primary pb-2" >Share on Facebook</a></small></button>
+                    </a>
+                    
+                    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank">
+                    <button class="button is-inline is-secondary"><small class="is-size-7 has-text-primary pb-2" >Share on Twitter</a></small></button>
+                    </a>
+                  </div>
 
-                            <hr>        <!-- this means to leave a line space before whatever comes next-->
+                  <hr>
+                    <!--post category-->
+                <p><small class="is-size-5 is-italic has-text-primary">Category:</small></p> 
+                    <a href="{% url 'category_detail' post.category.slug %}"><button class="button is-inline is-dark"><small class="is-size-7 has-text-primary pb-2" >{{ post.category }}</a></small></button>      <!--post category-->
 
-                            <!-- adding comment section in each post-->
-                            <h2 class="subtitle is-4">Comments</h2>         <!--comment header-->
-                            
-                            <!--comment form-->
-                            <form method="post" class="mb-6">
-                                {% csrf_token %}
-                                {{ form.as_p }}
+                <hr>
 
-                                <div class="field">
-                                    <div class="control">
-                                        <button class="button is-dark">Submit comment</button>
-                                    </div>
-                                </div>
-                            </form>
+                <!--<strong class="is-size-5 is-italic has-text-primary">Tag:</strong><p>{{ post.tags.all|join:", "}}</p>  -->   <!--tags for our post-->
+                
 
-                            {% for comment in post.comments.all %}                   <!--for loop to display everycomment made-->
-                                <article class="media box">
-                                    <div class="media-content">
-                                        <strong>{{ comment.name }}</strong> <small>{{ comment.created_at |timesince }} ago</small><br>
-                                        {{ comment.body }}
-                                    </div>
-                                </article>
+
+                <!--similar posts-->
+                <h2 class="is-size-4 is-italic has-text-primary pb-3">Other posts you may like:</h2>
+                        <ul>
+                            {% for similar_post in similar_posts %}
+                                <li class="pb-2"><a href="{{ similar_post.get_absolute_url }}"><button class="button is-dark"><p1 class="is-size-6 has-text-primary">{{ similar_post.title }}</p1></button> </a></li>
                             {% endfor %}
+                        </ul>
+                <hr>
+                
+                <h2 class="is-size-4 is-italic has-text-primary pb-3 ">Check out what's recent:</h2>
+                        
+                                        <div class="columns is-multiline is-centered ">
+                                            {% for post in recent_posts %}
+                                            <div class="column is-4 is-flex is-flex-wrap-wrap">       
+                                                <div class="box has-rounded-corners">
+                                                    <a href="{{ post.get_absolute_url }}">
+                                                        {% if post.image %}
+                                                            <figure class="image is-4by3">
+                                                                <img src="{{ post.image.url }}">
+                                                            </figure>
+                                                        {% endif %}
+                                                        <h2 class="subtitle is-size-6">{{ post.created_at |timesince }} ago</h2>
+                                                        <h1 class="title is-size-5">{{ post.title }}</h1>
+                                                        <h2 class="subtitle is-size-6">{{ post.intro|truncatechars:90 }}</h2>                                
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            {% endfor %}
+                                </div>
+
+
+                <hr>        <!-- this means to leave a line space before whatever comes next-->
+
+                <!-- adding comment section in each post-->
+                <h2 class="subtitle is-4">Comments</h2>         <!--comment header-->
+                
+                <!--comment form-->
+                <form method="post" class="mb-6">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-dark">Submit comment</button>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </form>
+
+                {% for comment in post.comments.all %}                   <!--for loop to display everycomment made-->
+                    <article class="media box">
+                        <div class="media-content">
+                            <strong>{{ comment.name }}</strong> <small>{{ comment.created_at |timesince }} ago</small><br>
+                            {{ comment.body }}
+                        </div>
+                    </article>
+                {% endfor %}
+        </section>
     </div>
 </section>
 {% endblock %}

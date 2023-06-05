@@ -1,9 +1,43 @@
 {% extends 'core/base.html' %}
 
-{% block title %}About | {% endblock %}
+{% block title %}Contact {% endblock %}
+
+{% block meta %}
+        <meta name="description" content="Get in touch with us! Contact our team for any inquiries, suggestions, or collaborations. We're here to help and eager to hear from you.">
+        <meta name="author" content="Tobietopia">
+        <meta property="og:title" content="Contact Tobietopia">
+        <meta property="og:description" content="Get in touch with us! Contact our team for any inquiries, suggestions, or collaborations. We're here to help and eager to hear from you.">
+        <meta property="og:url" content="/{% url 'contact' %}">
+        <meta property="og:type" content="article">
+{% endblock %}
 
 {% block content %}
-<strong class="is-size-5 is-italic has-text-centered"> Contact</strong>
+<strong class="is-size-5 is-italic has-text-centered">Contact TobieTopia</strong>
 <hr>
-    <p1>I am Tobi Adepoju, a foolish guy who loves to blog. I am also supper cool guy.</p1>
+<section class="hero is-fullheight">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns has-text-centered">
+                <section class="section">
+                <div class="content is-medium  box has-rounded-corners">
+                    <h2 class="pb-4 is-size-4 is-italic has-text-primary ">Speak to us</h2>
+
+                    <p class="is-size-6 is-family-monospace pb-1">We appreciate your interest! If you're looking to be a part of our awesome blog, support us, or simply have something to share, we'd love to hear from you. Our team is committed to providing prompt responses, so reach out to us, and we'll get back to you as quickly as possible!</p>
+                    <form method="post" action=".">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+    
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-dark is-small" type="submit"><p class="is-size-7 has-text-primary">Send</p></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>                
+                
 {% endblock %}

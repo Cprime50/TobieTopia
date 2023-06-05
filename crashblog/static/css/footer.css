@@ -1,15 +1,8 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-
-.site-content {
-    min-height: 100%
-    margin-button: -60px;
-}
-
-.footer {
-    height: 60px;
-    background-color: #0c0b0b;
+footer{
+  margin-top: auto;
 }

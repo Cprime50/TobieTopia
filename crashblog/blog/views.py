@@ -7,8 +7,9 @@ from taggit.models import Tag
 
 
 def detail(request, category_slug, slug):
-    post = get_object_or_404(Post, slug=slug, status=Post.ACTIVE)               #if someone clicks our blog post it will take them to our details.html, which has acces to our Postclass inn our models.py, post.ACTIVE so this apply only to active posts, only active posts will display
-
+    post = get_object_or_404(Post, slug=slug)
+    similar_posts = post.tags.similar_objects()[:10]
+    recent_posts = Post.objects.filter(status=Post.ACTIVE).order_by('-created_at')[:5]
     if request.method == 'POST':
         form = CommentForm(request.POST)                #we are telling django to save the comments people post under the commentform   class
 
@@ -17,13 +18,13 @@ def detail(request, category_slug, slug):
             comment.post = post
             comment.save()
 
-            return redirect('post_detail', slug = slug)
+            return redirect('post_detail', category_slug= category_slug, slug=slug)
     else:
         form = CommentForm()
 
-    form = CommentForm()                                    #this will display our comment section in the front end
+    form = CommentForm()                                    
 
-    return render(request, 'blog/detail.html', {'post':post, 'form':form})
+    return render(request, 'blog/detail.html', {'post':post, 'recent_posts':recent_posts ,'similar_posts':similar_posts, 'form':form})
 
 def category(request, slug):
     category = get_object_or_404(Category, slug=slug)
@@ -38,7 +39,7 @@ def category_list(request, slug):       #creating category list view
     
     return render(request, 'blog/categories.html', {'categories':categories} )
 
-def search(request):                                    #so user can search for a post using tyhr seach query
+def search(request):                                    #search query
     query = request.GET.get('query', '')
 
     posts = Post.objects.filter(status=Post.ACTIVE).filter (Q(title__icontains = query) | Q(intro__icontains=query) | Q(body__icontains=query))         #This is so u can searcg for keywords contained in any post body or into                  #the Q here is so the users search isn't case sensitive

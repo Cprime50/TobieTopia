@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-jdjnj7w(cjl(7@#gsq5%%9i^mi$5y)ftu3akai6ze5a5644dif'
+SECRET_KEY = os.environ.get('Crashblog_Secret_key')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURcd ITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['9baf-197-210-55-238.ngrok-free.app',
+ALLOWED_HOSTS = ['1b4c-197-210-54-221.ngrok-free.app',
                  '127.0.0.1']
 
 
@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig' ,         #core here is name of our app,app is the file inside of core called app.py and  coreconfig is the name of our class in the app.py    
     'blog.apps.BlogConfig',             #our blog app
     'crashblog',
-    'taggit'
+    'taggit',
+    'ckeditor',
+    'ckeditor_uploader', 
+    'django_social_share'
     ]
 
 MIDDLEWARE = [
@@ -81,8 +84,12 @@ WSGI_APPLICATION = 'crashblog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Tobietopia',
+        'USER': os.environ.get('p_user'),
+        'PASSWORD': os.environ.get('p_pass'),
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -128,7 +135,43 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+#CKEDITOR Rich Text format
+def static_font(path):
+    from django.templatetags.static import static
+    from django.utils.functional import lazy
+
+    return lazy(lambda: static(path), str)()
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+
+CKEDITOR_CONFIGS = {
+
+    'default': {
+        'toolbar': 'full',
+        'format_tags': 'h1;h2;h3;p;pre',
+        'toolbar_Custom': [
+            
+            ['Format', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+            ['Source', 'Undo', 'Redo'],
+        ],
+        'contentsCss': [static_font('css/font.css')],
+    }
+}
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#Email settings
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = os.environ.get('host')
+EMAIL_HOST_PASSWORD = os.environ.get('host_pass')
+EMAIL_PORT = '2525'
+

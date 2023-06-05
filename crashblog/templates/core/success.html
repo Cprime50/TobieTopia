@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Success | {% endblock %}
+
+{% block content %}
+<strong class="is-size-5 is-italic has-text-centered"> Weldone</strong>
+<hr>
+<section class="hero is-fullheight">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns has-text-centered">
+                <section class="section">
+                <div class="content is-medium  box has-rounded-corners">
+                    <h2 class="pb-4 is-size-4 is-italic has-text-primary ">SUC -CESS- FUL</h2>
+
+                    <p class="is-size-6 is-family-monospace pb-1">Your message was sent successfully</p>
+                    <p class="is-size-6 is-family-monospace pb-1">We will get back to you soonest</p>
+                    <p class="is-size-6 is-family-monospace pb-1">We hope you're doing well today?</p>
+                    <p>You can send us another message by<a href="{% url 'contact' %}"><button class="button is-small is-dark"><p1 class="is-size-7 has-text-primary"> clicking here</p1></button></a>
+                </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>                
+                
+{% endblock %}

@@ -1,0 +1,15 @@
+@media screen and (max-width: 768px) {
+    .navbar-menu {
+      background-color: #383636;  /* Replace #ff0000 with your desired background color */
+    }
+  
+    .navbar-item {
+      font-family: "Arial", sans-serif;  /* Replace "Your Font" with your desired font name */
+      color: #ffffff;  /* Replace #ffffff with your desired font color */
+      padding-bottom: 10px;
+    }
+    
+    .column.is-widescreen {
+      width: 100%;
+    }
+}

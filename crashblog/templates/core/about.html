@@ -1,9 +1,54 @@
 {% extends 'core/base.html' %}
 
-{% block title %}About | {% endblock %}
+{% block title %}About {% endblock %}
+
+
+{% block meta %}
+<meta name="description" content="We're all about having fun doing and talking about what you love. Whether you're a programmer, gamer, Disney fanatic, or someone who just loves to have fun, we have something great for everyone. Join us in Tobietopia!">
+<meta name="author" content="Tobietopia">
+<meta property="og:title" content="About | Tobietopia">
+<meta property="og:description" content="Welcome to our world of fun and creativity! Join us as we explore the exciting realms of technology and entertainment. Unleash your artistic side, dive into the enchanting world of beloved fascinations, and discover the magic of imaginations coming to life. Inspired by iconic brands like Disney and Nickelodeon, we celebrate the joy and nostalgia they bring. Let's embark on a captivating journey where programming meets playfulness, and creativity knows no bounds. Join our community and fuel your passion for fun and innovation at TobieTopia!">
+<meta property="og:url" content="/{% url 'about' %}">
+<meta property="og:type" content="article">
+{% endblock %}
 
 {% block content %}
-    <strong class="is-size-5 is-italic has-text-centered"> About</strong>
+    <strong class="is-size-5 is-italic has-text-centered">About TobieTopia</strong>
     <hr>
-    <p1>I am Tobi Adepoju, a foolish guy who loves to blog. I am also supper cool guy.</p1>
+    <section class="hero">
+        <section class="hero is-fullheight">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="columns has-text-centered">
+                        <section class="section">
+                        <div class="content is-medium  box has-rounded-corners">
+                            <h2 class="pb-4 is-size-6 is-italic has-text-primary ">Welcome to our blog! We're thrilled to have you here. Let us introduce ourselves:</h2>
+
+
+                            
+
+                            <p class="is-size-6 is-family-monospace pb-1">Hi evereyone, I'm Charles Oluwaseun Adepoju, the developer behind this blog. I embarked on this journey to create a fun project and enhance my web developement skills. Along the way, I've discovered a love for sharing my thoughts on the things that pique my interest.</p>
+                            
+                            <p class="is-size-6 is-family-sans-serif pb-4">So, stick around, and I assure you that you'll find our content engaging and enjoyable!</p>
+                                
+                                
+
+
+
+                            <p class="is-size-6 is-family-monospace pb-3">Hey, everyone! I'm Tobi Adepoju, and I'm absolutely thrilled to be a part of this blog. Writing and cartoons are two of my greatest passions, and what better way to combine them than by creating awesome content to share with all of you? I'm here to provide you with captivating articles and insights about the things I adore. Join me on this adventure, and together, we'll explore a world of fascinating topics and share great content that you'll absolutely love!</p>
+                                
+                            <p class="is-size-6 is-family-sans-serif">Thank you for joining us on this incredible journey of knowledge and entertainment. We cant wait to bring you exciting articles, thought-provoking discussions, and enjoyable content. Stay tuned, and lets embark on this wonderful adventure together!</p>
+                        </div>
+
+                        <hr>
+
+                        <div class=" box has-rounded-corners cta-section">
+                            <h2 class=" is-size-5 is-italic has-text-primary">Be a Part of Our Blog!</h2>
+                            <p class=" is-size-6 is-family-monospace pb-3">Whether you're a developer, a writer, someone who loves to have fun, or you simply find interest in what we do and want to support us, we'd love to hear from you!</p>
+                            <p>Contact us <a href="{% url 'contact' %}"><button class="button is-small is-dark"><p1 class="is-size-7 has-text-primary">here</p1></button></a> to get involved and be a part of our amazing community.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 {% endblock %}

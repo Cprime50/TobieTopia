@@ -1,6 +1,14 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Category | {% endblock %}
+{% block title %}Category {% endblock %}
+{% block meta %}
+<meta name="description" content="Browse the list of categories on Tobietopia. Explore a wide range of topics, including disney, programming, games, cartoons and more. Discover articles, tutorials, and resources that cater to your interests. Find the perfect category to dive into and unlock a world of knowledge and fun.">
+<meta name="author" content="Tobietopia">
+<meta property="og:title" content="Category | Tobietopia">
+<meta property="og:description" content="Browse the list of categories on Tobietopia. Explore a wide range of topics, including disney, programming, games, cartoons and more. Discover articles, tutorials, and resources that cater to your interests. Find the perfect category to dive into and unlock a world of knowledge and fun.">
+<meta property="og:url" content="/{% url 'category_list'%}">
+<meta property="og:type" content="article">
+{% endblock %}
 
 {% block content %}
     <strong class="is-size-5 is-italic has-text-centered">Categories</strong>
@@ -10,12 +18,11 @@
             <div class="content is-medium">
                 <ul>
                     {%for category in categories%}
-                       <li><div class="box has-rounded-corners is-inline-block has-background-dark">
-                       <a href="{% url 'category_detail' category.slug %}"><p class= "has-text-light">{{ category.title }}</p></a></div></li>
+                       <li><button class="button is-dark">
+                       <a href="{% url 'category_detail' category.slug %}"><p class= "has-text-light">{{ category.title }}</p></a></button></li>
                     {% endfor %}
                 </ul>
             </div>
-                
         </div>
     </div>    
 {% endblock %}

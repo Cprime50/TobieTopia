@@ -1,35 +1,54 @@
 {% extends 'core/base.html'%}
 
-{% block title %}Home | {% endblock %}
+{% block title %}Home{% endblock %}
+{% block meta %}
+        <meta name="description" content="Delve into a world of fun and knowledge, with captivating articles, tutorials, and inspiration.">
+        <meta name="author" content="Tobietopia">
+        <meta property="og:title" content="Fun, Magic and bringing imaginations to life | Tobietopia">
+        <meta property="og:description" content="Embark on an adventure at Tobietopia where fun documentarys, programming, games, and endless excitement awaits you. Discover insightful articles, engaging tutorials, and inspiration that fuels your imagination.">
+        <meta property="og:url" content="/">
+        <meta property="og:image" content="{{ post.image_url }}">
+        <meta property="og:type" content="article">
+{% endblock %}
 
 {% block content %}
+<hr>
+
 <strong class="is-size-5 is-italic has-text-centered">Home</strong>
 <hr>
-    <section class="hero">
-        <div class="hero-body">
-            <div class="container">
-                <section class="section">
-                    <div class="columns">
-                        <div class="column is-10 is-offset-2">
+
+                <div class="columns is-multiline">
                             {% for post in posts %}
-                                <div class="box has-rounded-corners">
+                            <div class="column is-tablet is-half-tablet is-4 is-flex is-flex-wrap-wrap">       
+                                <div class="card">
+                                    <div class="card-image">
                                     <a href="{% url 'post_detail' post.category.slug post.slug %}">
                                         {% if post.image %}
-                                            <figure class="image">
+                                            <figure class="image is-16by9  ">
                                                 <img src="{{ post.image.url }}">
                                             </figure>
                                         {% endif %}
-                                        <h2 class="subtitle is-size-6">{{ post.created_at |timesince }} ago</h2>
-                                        <h1 class="title is-size-3">{{ post.title }}</h1>
-                                        <h2 class="subtitle is-size-6">{{ post.intro }}...</h2>
-                                        <button class="button is-dark"><p1 class="is-size-7 has-text-primary">Read more»</p1></button>                                 
+                                        </div>
+                                    <div class="card-content">
+                                        <h2 class="subtitle is-family-primary is-size-6">{{ post.created_at |timesince }} ago</h2>
+                                        <h1 class="title is-family-primary is-size-5">{{ post.title }}</h1>
+                                        <h2 class="subtitle is-family-primary is-size-6">{{ post.intro |truncatechars_html:100 }}</h2></div>                              
                                     </a>
                                 </div>
+                            </div>
+                        
+                            
                             {% endfor %}
+                </div>
+                            </ul>
+                            <strong class="is-size-5 is-italic has-text-primary pb-2">Recent Posts:</strong>
+                            <ul>
+                            {% for recent_post in recent_posts %}
+                                <li class="pb-2"><a href="{{ recent_post.get_absolute_url }}"><button class="button is-dark"><p1 class="is-size-7 has-text-primary">{{ recent_post.title }}</p1></button> </a></li>
+                            {% endfor %}
+                            </ul>
                         </div>
-                    </div>
-                </section>
-            </div>
+                </div>
         </div>
     </section>
 
