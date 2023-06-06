@@ -66,3 +66,5 @@ Visit http://localhost:8000 in your web browser to access the Tobietopia Blog.
 Contributions are welcome! If you'd like to contribute to the Tobietopia Blog project, please follow these steps:
 
 **Note:** Passwords, usernames, and database configurations are not included in this repository. It's recommended to store sensitive information like passwords and database credentials in the OS environment variables or a separate configuration file. Users should configure these environment variables or files themselves before running the application.
+
+![](https://github.com/Cprime50/Web-dev-stuff/blob/master/full%20tobie.png)
