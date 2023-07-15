@@ -57,7 +57,7 @@ class Comment(models.Model):                #creating a new databse to store use
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name                #returns the name of person who created the comments, we can also use self.email to get their email
+        return self.name                #returns the name of person who created the comments, we can also use self.email to return their email
 
 class Contact(models.Model):
     name  = models.CharField( max_length=250)

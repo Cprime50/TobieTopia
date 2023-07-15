@@ -24,7 +24,7 @@
                                     <div class="card-image">
                                     <a href="{% url 'post_detail' post.category.slug post.slug %}">
                                         {% if post.image %}
-                                            <figure class="image is-16by9  ">
+                                            <figure class="image is-16by9">
                                                 <img src="{{ post.image.url }}">
                                             </figure>
                                         {% endif %}

@@ -1,6 +1,7 @@
 
 from django.urls import path, include, re_path
-
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 
@@ -12,4 +13,4 @@ urlpatterns = [
     path('<slug:slug>/', views.category, name='category_detail'),           #slug link for category section
     path('categories/', views.category_list, name='category_list'),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
-] 
+]  

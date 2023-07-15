@@ -9,9 +9,15 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
+import dj_database_url
 
 from pathlib import Path
-import os
+from dotenv import load_dotenv
+
+load_dotenv()       #loadind env variables
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,11 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('Crashblog_Secret_key')
 
 # SECURcd ITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.environ.get('DEBUG') == 'TRUE')
 
-ALLOWED_HOSTS = ['1b4c-197-210-54-221.ngrok-free.app',
+ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1']
-
+CSRF_TRUSTED_ORIGINS = []
 
 # Application definition
 
@@ -45,17 +51,20 @@ INSTALLED_APPS = [
     'taggit',
     'ckeditor',
     'ckeditor_uploader', 
-    'django_social_share'
+    'django_social_share',
+    'whitenoise',
     ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -82,16 +91,11 @@ WSGI_APPLICATION = 'crashblog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Tobietopia',
-        'USER': os.environ.get('p_user'),
-        'PASSWORD': os.environ.get('p_pass'),
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
 }
+
 
 
 # Password validation
@@ -131,9 +135,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'            #this is where all our media files will be stored, remember to pip install pillow for handling image
+STATIC_ROOT = BASE_DIR / 'assets'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #CKEDITOR Rich Text format
 def static_font(path):
