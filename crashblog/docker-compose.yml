@@ -1,26 +1,53 @@
-version: '3.11'
+version: '3.8'
 
 services:
   web:
-    build: ./app
-    command: python manage.py runserver 0.0.0.0:8000
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
+    image: <aws-account-id>.dkr.ecr.<aws-region>.amazonaws.com/django-ec2:web
+    command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static:/static
-    ports:
-      - 8000:8000
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    expose:
+      - 8000
     env_file:
-      - ./.env
-    depends_on:
-      - db
-  db:
-    image: postgres:13.0
+      - ./.env.staging
+  nginx-proxy:
+    container_name: nginx-proxy
+    build: nginx
+    image: <aws-account-id>.dkr.ecr.<aws-region>.amazonaws.com/django-ec2:nginx-proxy
+    restart: always
+    ports:
+      - 443:443
+      - 80:80
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=hello_django
-      - POSTGRES_PASSWORD=hello_django
-      - POSTGRES_DB=hello_django_dev
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    depends_on:
+      - web
+  nginx-proxy-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    env_file:
+      - ./.env.staging.proxy-companion
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - html:/usr/share/nginx/html
+      - vhost:/etc/nginx/vhost.d
+      - acme:/etc/acme.sh
+    depends_on:
+      - nginx-proxy
 
 volumes:
-  static:
-  postgres_data:
+  static_volume:
+  media_volume:
+  certs:
+  html:
+  vhost:
+  acme:

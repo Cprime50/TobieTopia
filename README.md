@@ -38,16 +38,6 @@ source env/bin/activate
 
 pip install -r requirements.txt
 
-**or intsall manually**
-pip install Django
-
-pip install django_ckeditor
-
-pip install django_taggit
-
-pip instalall Pillow
-
-pip install psycopg2
 
 **Apply the database migrations:**
 

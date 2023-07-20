@@ -26,12 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('Crashblog_Secret_key')
+SECRET_KEY = 'Mq0ZMZTThad2KzSF0eEyQjz05I363DUIVNgWdbSXDubP5vlQ8d' #os.environ.get('Crashblog_Secret_key')
 
 # SECURcd ITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.environ.get('DEBUG') == 'TRUE')
+DEBUG = True #(os.environ.get('DEBUG'  == 'TRUE'))
 
-ALLOWED_HOSTS = ['localhost',
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh','tobietopia.fly.dev', 'localhost',
                  '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = []
 
@@ -93,9 +93,16 @@ WSGI_APPLICATION = 'crashblog.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
-}
+    'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'Tobietopia',
+            'USER': 'postgres',
+            'PASSWORD': 'mattew50',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
 
+}
 
 
 # Password validation
@@ -135,10 +142,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'            #this is where all our media files will be stored, remember to pip install pillow for handling image
-STATIC_ROOT = BASE_DIR / 'assets'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #CKEDITOR Rich Text format
@@ -177,7 +182,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Email settings
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = os.environ.get('host')
-EMAIL_HOST_PASSWORD = os.environ.get('host_pass')
+EMAIL_HOST_USER = '75faeb277b4853' #os.environ.get('host')
+EMAIL_HOST_PASSWORD = '879df8d7b8ade8' #os.environ.get('host_pass')
 EMAIL_PORT = '2525'
 

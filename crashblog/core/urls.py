@@ -23,4 +23,6 @@ urlpatterns = [path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
     path('category/', views.category, name= 'category'),
     path('', include('blog.urls')),
     path('', views.frontpage, name='frontpage'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

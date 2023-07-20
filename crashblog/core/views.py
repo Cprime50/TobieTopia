@@ -25,7 +25,7 @@ def contact(request):
             form.save()
             subject = "From TobieTopia contact us form"
             messageTest = "The message"
-            email_from = os.environ.get('Email_Me')
+            email_from = 'Oluwaseundpj@gmail.com' #os.environ.get('Email_Me')
             email = form.cleaned_data['email']
             name = form.cleaned_data['name'] 
             message = form.cleaned_data['message']
@@ -35,7 +35,7 @@ def contact(request):
                 'email':email,
                 'message':message,
             })
-            recipient_list = os.environ.get('Email_User')
+            recipient_list = 'Charlesdpj78@gmail.com' #os.environ.get('Email_User')
             send_mail(subject, messageTest, email_from, [recipient_list], html_message=html)
             
             return render(request, 'core/success.html')

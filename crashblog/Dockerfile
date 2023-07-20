@@ -1,25 +1,24 @@
-# pull official base image
-FROM python:3.11.2
+ARG PYTHON_VERSION=3.11-slim-buster
 
-RUN pip install --upgrade pip
+FROM python:${PYTHON_VERSION}
 
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY ./crashblog .
-
-
-# set work directory
-WORKDIR /crashblog
-
-# set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install psycopg2 dependencies
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
+RUN mkdir -p /code
 
+WORKDIR /code
 
-# copy project
-COPY ./crashblog /
+COPY requirements.txt /tmp/requirements.txt
+RUN set -ex && \
+    pip install --upgrade pip && \
+    pip install -r /tmp/requirements.txt && \
+    rm -rf /root/.cache/
+COPY . /code
+
+ENV SECRET_KEY "4CjSRTntojPntU4CKWPyzO5sTfncNFToJkvLB311k4VnC5yKN4"
+RUN python manage.py collectstatic --noinput
+
+EXPOSE 8000
+
+CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "crashblog.wsgi"]
