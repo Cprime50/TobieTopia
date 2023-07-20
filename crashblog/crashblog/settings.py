@@ -31,9 +31,9 @@ SECRET_KEY = 'Mq0ZMZTThad2KzSF0eEyQjz05I363DUIVNgWdbSXDubP5vlQ8d' #os.environ.ge
 # SECURcd ITY WARNING: don't run with debug turned on in production!
 DEBUG = True #(os.environ.get('DEBUG'  == 'TRUE'))
 
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh','tobietopia.fly.dev', 'localhost',
+ALLOWED_HOSTS = ['tobietopia.vercel.app', '.now.sh','tobietopia.fly.dev', 'localhost',
                  '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = ['tobietopia.vercel.app', '.now.sh','tobietopia.fly.dev', 'localhost',]
 
 # Application definition
 
