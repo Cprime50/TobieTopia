@@ -33,7 +33,7 @@ DEBUG = True #(os.environ.get('DEBUG'  == 'TRUE'))
 
 ALLOWED_HOSTS = ['tobietopia.vercel.app', '.now.sh','tobietopia.fly.dev', 'localhost',
                  '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['tobietopia.vercel.app', '.now.sh','tobietopia.fly.dev', 'localhost',]
+CSRF_TRUSTED_ORIGINS = ['https://tobietopia.vercel.app','https://tobietopia.fly.dev', 'https://localhost',]
 
 # Application definition
 
