@@ -95,14 +95,25 @@ WSGI_APPLICATION = 'crashblog.wsgi.application'
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'Tobietopia',
-            'USER': 'postgres',
-            'PASSWORD': 'mattew50',
-            'HOST': 'localhost',
+            'NAME': 'tobietopia',
+            'USER': 'tobietopia',
+            'PASSWORD': 'VodIUSAAt1EZF5ELDwRf9bqmU2CNIADl',
+            'HOST': 'dpg-cisqfg18g3n42ohd5hc0-a',
             'PORT': '5432',
         }
-
 }
+
+#Test DB
+''''default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Tobietopia',
+        'USER': 'postgres',
+        'PASSWORD': 'mattew50',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }'''
+
+
 
 
 # Password validation
