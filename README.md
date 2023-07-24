@@ -57,4 +57,8 @@ Contributions are welcome! If you'd like to contribute to the Tobietopia Blog pr
 
 **Note:** Passwords, usernames, and database configurations are not included in this repository. It's recommended to store sensitive information like passwords and database credentials in the OS environment variables or a separate configuration file. Users should configure these environment variables or files themselves before running the application.
 
-![](https://github.com/Cprime50/Web-dev-stuff/blob/master/full%20tobie.png)
+![](https://github.com/Cprime50/TobieTopia/blob/master/screenshots/Screenshot_2023-07-20_22-58-37.png)
+![](https://github.com/Cprime50/TobieTopia/blob/master/screenshots/Screenshot_2023-07-20_22-59-03.png)
+![](https://github.com/Cprime50/TobieTopia/blob/master/screenshots/Screenshot_2023-07-20_22-59-41.png)
+![](https://github.com/Cprime50/TobieTopia/blob/master/screenshots/Screenshot_2023-07-20_22-59-55.png)
+![](https://github.com/Cprime50/TobieTopia/blob/master/screenshots/Screenshot_2023-07-20_23-00-03.png)
