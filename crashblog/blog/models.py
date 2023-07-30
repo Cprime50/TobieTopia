@@ -3,6 +3,11 @@ from django import forms
 from taggit.managers import TaggableManager
 #from django_ckeditor_5.fields import CKEditor5Field
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.contrib.auth.models import User
+
+from io import BytesIO
+from PIL import Image
+from django.core.files import File
 
 # Create your models here.
 class Category(models.Model):
@@ -48,6 +53,32 @@ class Post(models.Model):               #to choose whether a post should be visi
     
     def get_absolute_url(self):
         return '/%s/%s/' % (self.category.slug, self.slug)
+    
+    #resize image
+    def get_thumbnail(self):
+        if self.thumbnail:
+            return self.thumbnail.url
+        
+        else:
+            if self.image:
+                self.thumbnail = self.make_thumbnail(self.image)
+                self.save()
+
+                return self.thumbnail.url 
+            else:
+                return 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fe7.pngegg.com%2Fpngimages%2F573%2F501%2Fpng-clipart-python-computer-icons-programming-language-font-awesome-github-angle-text.png&tbnid=3fThsVUWMFFYAM&vet=12ahUKEwjPtqTI1p6AAxVEpkwKHUKiCC4QMygKegUIARDIAQ..i&imgrefurl=https%3A%2F%2Fwww.pngegg.com%2Fen%2Fpng-nkcfs&docid=jN9bp_Ogd5lSQM&w=900&h=900&q=python%20is%20awesome%20image&ved=2ahUKEwjPtqTI1p6AAxVEpkwKHUKiCC4QMygKegUIARDIAQ'
+            
+    def make_thumbnail(self, image, size=(300, 300)):
+        img = Image.open(image)
+        img.convert('RGB')
+        img.thumbnail(size)
+
+        thumb_io = BytesIO
+        img.save(thumb_io, 'JPEG', quality=85)
+
+        thumbnail = File(thumb_io, name=image.name)
+        
+        return thumbnail
 
 class Comment(models.Model):                #creating a new databse to store users comments
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)       #relating each postb  and its comment with a foreign_key
@@ -68,3 +99,4 @@ class Contact(models.Model):
         return self.email
     
 
+       

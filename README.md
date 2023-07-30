@@ -38,7 +38,6 @@ source env/bin/activate
 
 pip install -r requirements.txt
 
-
 **Apply the database migrations:**
 
 python manage.py makmigrations

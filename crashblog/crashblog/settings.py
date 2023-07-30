@@ -26,10 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'Mq0ZMZTThad2KzSF0eEyQjz05I363DUIVNgWdbSXDubP5vlQ8d' #os.environ.get('Crashblog_Secret_key')
+SECRET_KEY = os.environ.get('Crashblog_Secret_key') #os.environ.get('Crashblog_Secret_key')
 
 # SECURcd ITY WARNING: don't run with debug turned on in production!
-DEBUG = True #(os.environ.get('DEBUG'  == 'TRUE'))
+DEBUG = (os.environ.get('DEBUG'  == 'TRUE'))
 
 ALLOWED_HOSTS = ['tobietopia.vercel.app', '.now.sh','tobietopia.fly.dev', 'localhost',
                  '127.0.0.1']
@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'crashblog.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.parse('postgres://tobietopia:VodIUSAAt1EZF5ELDwRf9bqmU2CNIADl@dpg-cisqfg18g3n42ohd5hc0-a.oregon-postgres.render.com/tobietopia'),
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL')),
 }
 
 #Test DB
@@ -186,7 +186,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Email settings
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '75faeb277b4853' #os.environ.get('host')
-EMAIL_HOST_PASSWORD = '879df8d7b8ade8' #os.environ.get('host_pass')
+EMAIL_HOST_USER = os.environ.get('host')
+EMAIL_HOST_PASSWORD = os.environ.get('host_pass')
 EMAIL_PORT = '2525'
 
